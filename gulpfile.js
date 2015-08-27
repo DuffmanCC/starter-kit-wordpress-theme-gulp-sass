@@ -4,15 +4,14 @@ var gulp 		= require('gulp'),
 	livereload	= require('gulp-livereload');
 
 
-// Uglify js files
+// Uglify .js files
 gulp.task('scripts', function(){
 	gulp.src('src/js/*.js')
 	.pipe(uglify())
 	.pipe(gulp.dest('dist/js/'));
 });
 
-
-// Compile scss files to css
+// Compile .scss files to .css
 gulp.task('compile', function(){
 	return sass('src/sass/style.scss', {
 		style: 'nested'
@@ -22,14 +21,21 @@ gulp.task('compile', function(){
 	.pipe(livereload());
 });
 
+// Copy .php files from scr/ to dist/
+gulp.task('copyphp', function(){
+	gulp.src('src/**/*.php')
+	.pipe(gulp.dest('dist/'));
+});
 
 // Watch
 gulp.task('watch', function(){
 	livereload.listen();
-	gulp.watch('src/**/*.*', ['compile']);
+	gulp.watch('src/sass/*.scss', ['compile']);
+	gulp.watch('src/**/*.php', ['copyphp']);
+	gulp.watch('src/js/*.js', ['scripts'])
 });
 
 
-gulp.task('default', ['scripts', 'compile']);
+gulp.task('default', ['scripts', 'compile', 'copyphp']);
 
 
