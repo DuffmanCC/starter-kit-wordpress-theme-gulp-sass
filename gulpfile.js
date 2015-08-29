@@ -1,7 +1,7 @@
 var gulp 		= require('gulp'),
 	uglify 		= require('gulp-uglify'),
-	sass 		= require('gulp-ruby-sass'),
-	livereload	= require('gulp-livereload');
+	livereload	= require('gulp-livereload'),
+	compass		= require('gulp-compass');
 
 
 // Uglify .js files
@@ -11,12 +11,15 @@ gulp.task('scripts', function(){
 	.pipe(gulp.dest('dist/js/'));
 });
 
-// Compile .scss files to .css
-gulp.task('compile', function(){
-	return sass('src/sass/style.scss', {
-		style: 'nested'
-	})
-	.on('error', sass.logError)
+// Compass to css
+gulp.task('compass', function(){
+	gulp.src('src/sass/*.sass')
+	.pipe(compass({
+		config_file: './config.rb',
+	    css: 'dist/',
+	    sass: 'src/sass',
+	    style: 'expanded'
+	}))
 	.pipe(gulp.dest('dist/'))
 	.pipe(livereload());
 });
@@ -27,15 +30,14 @@ gulp.task('copyphp', function(){
 	.pipe(gulp.dest('dist/'));
 });
 
-// Watch
+// Watch con compass
 gulp.task('watch', function(){
 	livereload.listen();
-	gulp.watch('src/sass/*.scss', ['compile']);
+	gulp.watch('src/sass/*.scss', ['compass']);
 	gulp.watch('src/**/*.php', ['copyphp']);
 	gulp.watch('src/js/*.js', ['scripts'])
 });
 
-
-gulp.task('default', ['scripts', 'compile', 'copyphp']);
+gulp.task('default', ['scripts', 'compass', 'copyphp']);
 
 

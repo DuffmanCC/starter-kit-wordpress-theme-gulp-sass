@@ -1,3 +1,14 @@
 @import "variables";
 @import "mixins";
 @import "base";
+@import "compass";
+
+.d1e{
+	width: 500px;
+	transition: width 2s;
+	border-radius: 5px;
+	text-shadows: 1px 1px blue;
+}
+.ada{
+	@include border-radius(9px);
+}
