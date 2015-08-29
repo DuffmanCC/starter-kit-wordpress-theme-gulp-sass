@@ -871,16 +871,3 @@ object {
 .gallery-caption {
   display: block;
 }
-
-.d1e {
-  width: 500px;
-  transition: width 2s;
-  border-radius: 5px;
-  text-shadows: 1px 1px blue;
-}
-
-.ada {
-  -moz-border-radius: 9px;
-  -webkit-border-radius: 9px;
-  border-radius: 9px;
-}
